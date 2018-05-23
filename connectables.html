@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="UTF-8">
+	
+    <title>Connectables Task</title>
+	
+	<!-- CSS -->
+	<link rel="stylesheet" href="css/DragsAndDrops.css"/>	
+	
+</head>
+
+<body style="background-color: #f0f0f0;">
+
+	<!-- Main 960x600 Container --> 
+	<div style="position: relative; width: 960px; height: 600px; margin: auto; background-color: #aaa; overflow: hidden;" >
+		
+		<!-- Task Droppables -->
+		<div id="drop1" data-conn="a2" class="dropHandle" style="left: 20px; top: 200px; display: flex;"><img src="images/drops/drop.png" style="width: 100%; opacity: 0.5; margin: auto;"></img></div>
+		<div id="drop2" data-conn="a3" class="dropHandle" style="left: 400px; top: 200px;"><img src="images/drops/drop.png" style="opacity: 0.5;"></img></div>
+		<div id="drop3" data-conn="a1" class="dropHandle" style="left: 700px; top: 200px;"><img src="images/drops/drop.png" style="opacity: 0.5;"></img></div>
+		<div id="drop4" data-conn="a4" class="dropHandle" style="left: 400px; top: 400px;"><img src="images/drops/drop.png" style="opacity: 0.5;"></img></div>
+		<div id="drop5" data-conn="a5" class="dropHandle" style="left: 700px; top: 400px;"><img src="images/drops/drop.png" style="opacity: 0.5;"></img></div>
+
+		<!-- Whole Screen SVG container -->
+		<svg id="taskSvgs" class="svgContainer" style="z-index:0;" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+			viewBox="0 0 960 600" style="enable-background:new 0 0 960 600;" xml:space="preserve">
+			<g>
+				<!--A line for each Handle/Label element-->
+				<path id="line1SVG" class="lineSVG" style="fill:rgba(0,0,0,0); stroke:rgb(0,160,149); stroke-width:4; opacity:1;" stroke-linecap="round" stroke-dasharray="0,7" d="M0,0 C0,0 0,0 0,0 " />
+				<path id="line2SVG" class="lineSVG" style="fill:rgba(0,0,0,0); stroke:rgb(0,160,149); stroke-width:4; opacity:1;" stroke-linecap="round" stroke-dasharray="0,7" d="M0,0 C0,0 0,0 0,0 " />
+				<path id="line3SVG" class="lineSVG" style="fill:rgba(0,0,0,0); stroke:rgb(0,160,149); stroke-width:4; opacity:1;" stroke-linecap="round" stroke-dasharray="0,7" d="M0,0 C0,0 0,0 0,0 " />
+				<path id="line3SVG" class="lineSVG" style="fill:rgba(0,0,0,0); stroke:rgb(0,160,149); stroke-width:4; opacity:1;" stroke-linecap="round" stroke-dasharray="0,7" d="M0,0 C0,0 0,0 0,0 " />
+				
+				<!--Each SVG that accepts drops-->
+				<circle id="partxsvg" class="hoverParts" cx="50" cy="80" r="40" stroke="black" stroke-width="3" fill="red" />
+				<circle id="partysvg" class="hoverParts" cx="180" cy="90" r="40" stroke="black" stroke-width="3" fill="red" />
+				<circle id="partzsvg" class="hoverParts" cx="310" cy="100" r="40" stroke="black" stroke-width="3" fill="red" />
+				<circle id="partwsvg" class="hoverParts" cx="440" cy="110" r="40" stroke="black" stroke-width="3" fill="red" />
+				<circle id="partksvg" class="hoverParts" cx="570" cy="120" r="40" stroke="black" stroke-width="3" fill="red" />
+			</g>
+		</svg>
+		
+		<!-- Task Handles, one for each Label element -->	
+		<div id="drag1" data-conn="a1" class="dragHandle" style="left: 100px; top: 436px; z-index: 12; display: flex; align-items: center;">
+			<img draggable="false" style="width: 80%; margin: auto;" src="move-arrows.svg"></img>
+		</div>
+		<div id="drag2" data-conn="a2" class="dragHandle" style="left: 300px; top: 436px; z-index: 12; display: flex; align-items: center;">
+			<img draggable="false" style="width: 80%; margin: auto;" src="move-arrows.svg"></img>
+		</div>
+		<div id="drag3" data-conn="a3" class="dragHandle" style="left: 600px; top: 436px; z-index: 12; display: flex; align-items: center;">
+			<img draggable="false" style="width: 80%; margin: auto;" src="move-arrows.svg"></img>
+		</div>
+		<div id="drag4" data-conn="a4" class="dragHandle" style="left: 150px; top: 236px; z-index: 12; display: flex; align-items: center;">
+			<img draggable="false" style="width: 80%; margin: auto;" src="move-arrows.svg"></img>
+		</div>
+		
+
+		
+		<!-- Task Title/Labels --><!-- fpos = the final element position, when correctly dragged-->
+		<div id="connect1" data-fposx="120" data-fposy="120" class="connectButton" style="width: 215px; height: 44px; top: 478px; left: 33px; z-index: 11;">
+			<div class="roundPin" style="left:20%;"></div><!-- RoundPin is necessary, tells the script where to attach the SVG line-->
+			<p class="textConn">i connect to drop 3</p>
+		</div>
+		<div id="connect2" data-fposx="320" data-fposy="320" class="connectButton" style="width: 170px; height: 44px; top: 478px; left: 300px; z-index: 11;">
+			<div class="roundPin"></div>
+			<p class="textConn">me, to drop 1</p>
+		</div>
+		<div id="connect3" data-fposx="520" data-fposy="520" class="connectButton" style="width: 215px; height: 44px; top: 478px; left: 600px; z-index: 11;">
+			<div class="roundPin"></div>
+			<p class="textConn">put me into drop 2</p>
+		</div>
+		<div id="connect4" data-fposx="620" data-fposy="320" class="connectButton" style="width: 115px; height: 44px; top: 328px; left: 130px; z-index: 11;">
+			<div class="roundPin"></div>
+			<p class="textConn">drop 4!</p>
+		</div>
+		
+	</div>
+	
+	<!-- Connectables Script -->
+	<script src="js/makeConnectables.js"></script>
+	
+	<!-- Task Main Script -->
+	<script>
+		
+		makeConnectables(function(){console.log("finished");});
+	
+	</script>
+	
+</body>
+
+</html>

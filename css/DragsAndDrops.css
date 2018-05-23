@@ -1,0 +1,209 @@
+:root{
+	--hovercolor: rgba(255,0,0,1);
+}
+@font-face {
+	font-family: 'Conqueror Sans';
+	font-weight: 400;
+	src: url('../font/ConquerorSans.woff') format('woff'), /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+		url('../font/ConquerorSans.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+}
+@font-face {  
+	font-family: 'Conqueror Sans Bold';
+	font-weight: 700;
+	src: url('../font/ConquerorSans-Bold.woff') format('woff'), /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+		url('../font/ConquerorSans-Bold.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+}
+body{
+	-webkit-user-select: none;
+    -moz-user-select: none;
+	user-select: none;
+}
+
+/* ANIMATION LIST WRONG */
+@keyframes wrongDrop {
+	0% { color: #2d2d2d; background-color: #f0f0f0; box-shadow: 0px 0px 2px 2px rgba(244,129,84,0);}
+    50% { color: #2d2d2d; background-color: #ffd1c0; box-shadow: 0px 0px 2px 2px rgba(244,129,84,1);}
+	100% { color: #666; background-color: #fff; box-shadow: 0px 0px 2px 2px rgba(244,129,84,0);}
+}
+@keyframes wrongPin {
+	0% { background-color: #f0f0f0; }
+    50% { background-color: #ffd1c0; }
+	100% { background-color: #fff; }
+}
+
+@keyframes wrongDropHandle {
+	0% { color: #2d2d2d; background-color: #f0f0f0; border-color: rgba(0,0,0,0.2);}
+    50% { color: #2d2d2d; background-color: rgba(244,129,84,1); border-color: #f48154;}
+	100% { color: #666; background-color: #fff; border-color: rgba(0,0,0,0.1);}
+}
+
+@keyframes rightDrop {
+	0% {color: #2d2d2d; box-shadow: 0px 0px 0px 0px #fff; background-color: #fff; border-color: #e4e4e4; animation-timing-function: ease-in;}
+    40% {background-color: #24ddd0; border-color: #24ddd0; animation-timing-function: ease-out;}
+	50% {box-shadow: 0px 0px 5px 1px #24ddd0;}
+	90% {box-shadow: 0px 0px 10px 2px #24ddd0; border-color: rgba(255,255,255,0);}
+	100% {box-shadow: 0px 0px 0px 0px #fff; border-color: rgba(255,255,255,0);}
+}
+@keyframes rightDropStay {
+	0% {color: #2d2d2d; box-shadow: 0px 0px 0px 0px #fff; background-color: #fff; border-color: #e4e4e4; animation-timing-function: ease-in;}
+    40% {background-color: #24ddd0; border-color: #24ddd0; animation-timing-function: ease-out;}
+	50% {box-shadow: 0px 0px 5px 1px #24ddd0;}
+	90% {box-shadow: 0px 0px 10px 2px #24ddd0; border-color: rgba(255,255,255,0);}
+	100% {box-shadow: 0px 0px 10px 2px #24ddd0; border-color: rgba(255,255,255,0);}
+}
+
+@keyframes rightSVG {
+	0% {stroke-width: 0px; stroke: rgba(164,248,242,0.2); fill: rgba(77,240,229,0.2);}
+	10% {stroke-width: 5px; stroke: rgba(164,248,242,0.5); fill: rgba(77,240,229,0.5);}
+    25% {stroke-width: 5px; stroke: rgba(164,248,242,0.9); fill: rgba(77,240,229,0.7);}
+	75% {stroke-width: 5px; stroke: rgba(164,248,242,0.2); fill: rgba(77,240,229,0.2);}
+	100% {stroke-width: 0px; stroke: rgba(164,248,242,0); fill: rgba(77,240,229,0);}
+}
+
+/* ANIMATION WRONG CLICK */
+@keyframes wrongLine {
+	0% {stroke-width: 5px; stroke: rgba(0,160,149,1);}
+    25% {stroke-width: 5px; stroke: rgba(244,129,84,1);}
+	75% {stroke-width: 5px; stroke: rgba(244,129,84,1);}
+	100% {stroke-width: 5px; stroke: rgba(0,160,149,1);}
+
+}
+
+.dragDiv{
+	width: 156px;
+	height: 66px;
+	text-align: center; 
+	position: absolute; 
+	display: block; 
+	background-color: white; 
+	border-radius: 2px;
+	transition: opacity 1s, transform 0.4s;
+	cursor: -webkit-grab;
+	cursor:-moz-grab;
+	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
+	color: #666;
+}
+.dragDiv:hover{
+	color: #2d2d2d;
+	transform: scale(1.03,1.03);
+	transition: transform 0.1s;
+}
+.dragDiv:active {
+	cursor: -webkit-grabbing; 
+	cursor:-moz-grabbing;
+	box-shadow: 0px 3px 8px 2px rgba(0,0,0,0.2);
+	color: #2d2d2d;
+}
+
+.dropDiv{
+	position: absolute; 
+	display: block; 
+	background-color: #f0f0f0;
+	width: 156px;
+	height: 66px;
+	box-shadow:inset 0px 0px 2px 2px rgba(0,0,0,0.2);
+	border-radius: 2px;
+	transition: opacity 1s;
+}
+.dropDiv:hover {
+	background-color: #e4e4e4;
+}
+.texDragDiv{
+	position: absolute;
+	top: 0px; 
+	left: 0px;
+	bottom:0;
+	right:0;
+	margin: 5px;
+	margin-top: 8px;
+	font-size: 23px;
+	font-family: 'Conqueror Sans';
+	line-height: 1;
+}
+.roundPin{
+	position: relative; 
+	width: 8px; 
+	height: 8px; 
+	top: -4px; 
+	display: block;
+	border-radius: 100%;
+	margin: auto; 
+	background-color: rgb(0,160,149); 
+	transition: opacity 0.3s;
+}
+.connectButton{
+	text-align: center; 
+	position: absolute; 
+	display: block;
+	border-radius: 3px;	
+	background-color: white; 
+	opacity: 1; 
+	transition: opacity 0.8s, left 0.5s, top 0.5s;
+	color: rgba(102,102,102,1);
+}
+.connectButtonSelected{
+	box-shadow: 0px 0px 0px 2px rgba(0,160,149,1);
+	
+	color: rgba(0,160,149,1);
+}
+.connectButtonSelected > .roundPin{
+
+	background-color: rgba(0,160,149,1); 
+}
+.textConn{
+	position: absolute;
+	top: 0px; 
+	left: 0px;
+	bottom:0;
+	right:0;
+	margin-top: 9px;
+	line-height: 24px;
+	font-size: 23px;
+	font-family: 'Conqueror Sans';
+}
+.lineSVG{
+	transition: stroke 1s;
+	z-index: 8;
+}
+/*Handles*/
+.dragHandle{
+	width: 24px;
+	height: 24px;
+	text-align: center; 
+	position: absolute; 
+	display: block; 
+	background-color: rgba(0,160,149,1); 
+	border-radius: 30px;
+	opacity: 1;
+	transition: all 1s;
+	cursor: -webkit-grab;
+	cursor:-moz-grab;
+	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
+	color: #666;
+	z-index: 12;
+}
+.dragHandle:hover{
+	color: #2d2d2d;
+}
+.dragHandle:active {
+	cursor: -webkit-grabbing; 
+	cursor:-moz-grabbing;
+	box-shadow: 0px 3px 8px 2px rgba(0,0,0,0.2);
+	color: #2d2d2d;
+}
+.dropHandle{
+	position: absolute; 
+	display: block; 
+	/*background-color: #f0f0f0;*/
+	width: 32px;
+	height: 32px;
+	/*box-shadow:inset 0px 0px 2px 2px rgba(0,0,0,0.2);*/
+	border-radius: 16px;
+	transition: opacity 1s, transform 0.5s;
+}
+.dropHandleHover{
+	background-color: #000;
+	transform: scale(1.3,1.3);
+}
+
+

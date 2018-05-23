@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="UTF-8">
+	
+    <title>Draggables Task</title>
+	
+	<!-- CSS -->
+	<link rel="stylesheet" href="css/DragsAndDrops.css"/>	
+	
+</head>
+
+<body style="background-color: #f0f0f0;">
+
+	<!-- Main 960x600 Container --> 
+	<div style="position: relative; width: 960px; height: 600px; margin: auto; background-color:white; overflow: hidden;" >
+		
+		<!-- Task Droppables -->
+		<div id="drop1" data-conn="a2" class="dropDiv" style="left: 20px; top: 200px;"></div>
+		<div id="drop2" data-conn="a3" class="dropDiv" style="left: 400px; top: 200px;"></div>
+		<div id="drop3" data-conn="a1" class="dropDiv" style="left: 700px; top: 200px;"></div>
+		
+		<!-- Task Dragables -->	
+		<div id="drag1" data-conn="a1" class="dragDiv" style="left: 4%; top: 10%;"><p class="texDragDiv">drag me to 3</p></div>
+		<div id="drag2" data-conn="a2" class="dragDiv" style="left: 50vh; top: 20%;"><p class="texDragDiv">drag me to 1</p></div>
+		<div id="drag3" data-conn="a3" class="dragDiv" style="left: 200px; top: 20px;"><p class="texDragDiv">drag me to 2</p></div>
+		<div id="drag4" data-conn="a4" class="dragDiv" style="left: 300px; top: 300px;"><p class="texDragDiv">not me</p></div>
+		<div id="drag5" data-conn="a5" class="dragDiv" style="left: 400px; top: 400px;"><p class="texDragDiv">not me</p></div>
+		
+	</div>
+	
+	<!-- Draggables Script -->
+	<script src="js/makeDraggables.js"></script>
+	
+	<!-- Task Main Script -->
+	<script>
+
+		makeDraggables(function(){console.log("finished");});
+	
+	</script>
+	
+</body>
+
+</html>
