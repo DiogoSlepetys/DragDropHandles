@@ -9,6 +9,8 @@ function makeConnectables(func){
 	//how many elements were correctly dragged?
 	var taskCompletion = 0;
 	
+	var container = document.getElementsByClassName("svgContainer");
+	
 	//get all drag button elements
 	var dragButtons = document.getElementsByClassName("connectButton");
 	
@@ -50,13 +52,14 @@ function makeConnectables(func){
 		var bezierRootX = dragButtons[k].offsetLeft + dragButtons[k].children[0].offsetLeft + dragButtons[k].children[0].offsetWidth/2;
 		var bezierRootY = dragButtons[k].offsetTop + dragButtons[k].children[0].offsetTop + dragButtons[k].children[0].offsetHeight/2;
 		var posX = dragDivs[k].offsetLeft + dragDivs[k].offsetWidth/2;
-		var posY = dragDivs[k].offsetTop + dragDivs[k].offsetHeight;
+		var posY = dragDivs[k].offsetTop + dragDivs[k].offsetHeight/2;
 		
 		var bezierHandleX = bezierRootX + (bezierRootX - posX)/2;
 		var bezierHandleY = bezierRootY - (bezierRootY -posY)/2;
 		
 		lines[k].setAttribute("d","M"+bezierRootX+","+bezierRootY+" C"+bezierRootX+","+bezierHandleY+" "+posX+","+bezierHandleY+" "+posX+","+posY+"");
 		lines[k].style.opacity = "1";
+	
 	}
 	
 	//highlight SVGs on hover
@@ -108,6 +111,7 @@ function makeConnectables(func){
 		var posY = 0;
 		
 		var end = 0;
+		var endSide = 0;
 
 		function dragMouseDown(e) {
 			e = e || window.event;
@@ -227,9 +231,17 @@ function makeConnectables(func){
 			}
 			if(end == 2){//drops to bottom part
 				bezierRootX = dragButtons[currentLine].offsetLeft + dragButtons[currentLine].children[0].offsetLeft + dragButtons[currentLine].children[0].offsetWidth/2;
-				bezierRootY = dragButtons[currentLine].offsetTop + dragButtons[currentLine].offsetHeight + dragButtons[currentLine].children[0].offsetTop + dragButtons[currentLine].children[0].offsetHeight/2;
+				bezierRootY = dragButtons[currentLine].offsetTop + dragButtons[currentLine].children[0].offsetTop + 6*dragButtons[currentLine].children[0].offsetHeight;
 				//bezierRootX = dragButtons[currentLine].offsetLeft + dragButtons[currentLine].offsetWidth/2;
 				//bezierRootY = dragButtons[currentLine].offsetTop + dragButtons[currentLine].offsetHeight;
+			}
+			if(end == 3){//goes to left part
+				bezierRootX = dragButtons[currentLine].offsetLeft;
+				bezierRootY = dragButtons[currentLine].offsetTop + dragButtons[currentLine].children[0].offsetTop + dragButtons[currentLine].children[0].offsetHeight/2;
+			}
+			if(end == 4){//goes to right part
+				bezierRootX = dragButtons[currentLine].offsetLeft + dragButtons[currentLine].children[0].offsetLeft + dragButtons[currentLine].children[0].offsetWidth;
+				bezierRootY = dragButtons[currentLine].offsetTop + dragButtons[currentLine].children[0].offsetTop + dragButtons[currentLine].children[0].offsetHeight/2;
 			}
 			
 			//interpolate positions until finished
@@ -240,10 +252,19 @@ function makeConnectables(func){
 
 				posY = posY - 14;
 				
-				var bezierHandleX = bezierRootX + (bezierRootX - posX)/2;
+				//console.log(container[0].clientHeight);
+				
+				var bezierHandleX = bezierRootX - (bezierRootX - posX)/2;
 				var bezierHandleY = bezierRootY - (bezierRootY -posY)/2;
-						
+
+				if(end > 2 && end < 5){
+
+					lines[dragDivs.indexOf(elem)].setAttribute("d","M"+bezierRootX+","+bezierRootY+" C"+bezierHandleX+","+bezierRootY+" "+bezierHandleX+","+posY+" "+posX+","+posY+"");
+					
+				}
+				else{
 				lines[dragDivs.indexOf(elem)].setAttribute("d","M"+bezierRootX+","+bezierRootY+" C"+bezierRootX+","+bezierHandleY+" "+posX+","+bezierHandleY+" "+posX+","+posY+"");
+				}
 				
 				if(interp < 600){
 					interp++;
@@ -326,10 +347,47 @@ function makeConnectables(func){
 								lines[currentLine].style.stroke = "#fff";
 								interp = 2;
 
-								if(dragButtons[currentLine].dataset.fposy > elem.offsetTop){
-									end = 1;
+								console.log(dragButtons[currentLine].children[0].offsetTop);
+								console.log(dragButtons[currentLine].offsetHeight/2);
+								
+								if(dragButtons[currentLine].children[0].offsetLeft < dragButtons[currentLine].offsetWidth/2)//pin position on left
+								{
+									endSide = 3;
 								}
-								else{ end = 2; }
+								else if(dragButtons[currentLine].children[0].offsetLeft > dragButtons[currentLine].offsetWidth/2)//on bottom
+								{
+									endSide = 4;
+								}
+								
+								if(dragButtons[currentLine].children[0].offsetTop < dragButtons[currentLine].offsetHeight/2)//pin position on top
+								{
+									endSide = 1;
+								}
+								else if(dragButtons[currentLine].children[0].offsetTop > dragButtons[currentLine].offsetHeight/2)//on bottom
+								{
+									endSide = 2;
+								}
+								
+								
+								if(endSide > 0 && endSide <= 2){//pinned to the top or bottom
+									if(dragButtons[currentLine].dataset.fposy > elem.offsetTop){//if top ending is bigger
+										end = 1;//to top, bigger 
+										console.log("to top");
+									}else{
+										end = 2;//to bottom
+										console.log("to bottom");
+									}
+								}
+								else if(endSide >= 3){//pinned to the sides of the element
+									if(dragButtons[currentLine].dataset.fposx > elem.offsetLeft){//if left ending is bigger	
+										end = 3;//to left, bigger
+										console.log("to left");
+									}else{
+										end = 4;//to right
+										console.log("to right");
+									}
+								}			
+								
 							},1000);
 							
 							taskCompletion += 1;
