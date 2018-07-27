@@ -135,7 +135,7 @@ function makeConnectables(func){
 			
 			elem.style.transition = "opacity 2s";
 			//elem.style.transform = "scale(2,2)";
-			elem.style.boxShadow = "0px 0px 0px 8px rgba(0,160,149,1)";
+			
 			
 			if(elem.act != "right"){
 				document.onmouseup = closeDragElement;
@@ -168,6 +168,9 @@ function makeConnectables(func){
 				pos4 = e.clientY;
 			}
 
+			//pop up
+			elem.style.boxShadow = "0px 0px 0px 8px rgba(0,160,149,1)";
+			
 			//handle next position
 			elem.style.top = (elem.offsetTop - pos2) + "px";
 			elem.style.left = (elem.offsetLeft - pos1) + "px";
@@ -266,9 +269,9 @@ function makeConnectables(func){
 				lines[dragDivs.indexOf(elem)].setAttribute("d","M"+bezierRootX+","+bezierRootY+" C"+bezierRootX+","+bezierHandleY+" "+posX+","+bezierHandleY+" "+posX+","+posY+"");
 				}
 				
-				if(interp < 600){
+				if(interp < 100){
 					interp++;
-				}else{interp = 0; end = 0;}
+				}else{interp = 0; end = 0; currentLine = -1;}
 			}	
 			
 		}
